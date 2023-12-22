@@ -2,6 +2,8 @@ import tkinter
 import tkinter.ttk
 import sqlite3
 
+from model import Model
+
 
 class View(tkinter.Tk):
     def __init__(self, controller):
@@ -53,9 +55,6 @@ class View(tkinter.Tk):
 
     def show_ticket_details(self):
         self.ticket_details.pack(side='left', fill='y')
-
-    # def refresh_database(self):
-    #     self.controller.new_setup()
 
 
 class Container_Ticket_Bar(tkinter.Frame):
@@ -209,8 +208,11 @@ class Container_Ticket_Details(tkinter.Frame):
                             RAM=?, GPU=?, Storage=?, PSU=?, PCCase=?, Case_Fans=? WHERE name=?",
                         (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, a))
             conn.commit()
+            conn.close()
 
             # refresh the database
+            new_model = Model()
+            self.controller.model = new_model
 
         for component in self.general_components:
             if ticket is None:
